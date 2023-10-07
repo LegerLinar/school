@@ -1,13 +1,17 @@
 package ru.hogwarts.school.model;
 
 public class Student {
-    private Long id = 0L;
+    private long id = 0L;
     private String name;
     private int age;
+
     public Student(String name, int age) {
-        ++id;
         this.name = name;
         this.age = age;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public int getAge() {
