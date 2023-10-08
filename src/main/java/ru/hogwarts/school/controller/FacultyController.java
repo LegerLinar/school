@@ -1,6 +1,6 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
@@ -18,27 +18,36 @@ public class FacultyController {
     }
 
     @PostMapping
-    public ResponseEntity<Faculty> addFaculty(@RequestBody Faculty faculty) {
-        Faculty tempFac = facultyService.addFaculty(faculty);
+    public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty) {
+        Faculty tempFac = facultyService.createFaculty(faculty);
+        if(!verifierNotNull(tempFac)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         return ResponseEntity.ok(tempFac);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Faculty> findFaculty(@PathVariable("id") long id) {
         Faculty tempFaculty = facultyService.findFaculty(id);
+        if (!verifierNotNull(tempFaculty)) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(tempFaculty);
     }
 
     @PutMapping
     public ResponseEntity<Faculty> updateFaculty(@RequestBody Faculty faculty) {
         Faculty tempFaculty = facultyService.updateFaculty(faculty);
+        if (!verifierNotNull(tempFaculty)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         return ResponseEntity.ok(tempFaculty);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable("id") long id) {
         Faculty tempFaculty = facultyService.deleteFaculty(id);
-        if (tempFaculty == null) {
+        if (!verifierNotNull(tempFaculty)) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(tempFaculty);
@@ -49,5 +58,12 @@ public class FacultyController {
                                                                     String color) {
         Collection<Faculty> tempCollection = facultyService.getFacultySetByColor(color);
         return ResponseEntity.ok(tempCollection);
+    }
+
+    private boolean verifierNotNull(Faculty faculty){
+        if(faculty == null){
+            return false;
+        }
+        return true;
     }
 }

@@ -1,6 +1,6 @@
 package ru.hogwarts.school.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
@@ -18,26 +18,38 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> addStudent(@RequestBody Student student) {
-        Student tempStud = schoolService.addStudent(student);
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        Student tempStud = schoolService.createStudent(student);
+        if (!verifierNotNull(tempStud)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         return ResponseEntity.ok(tempStud);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Student> findStudent(@PathVariable("id") long id) {
         Student tempStud = schoolService.findStudent(id);
+        if(!verifierNotNull(tempStud)){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(tempStud);
     }
 
     @PutMapping
     public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student tempStud = schoolService.updateStudent(student);
+        if (!verifierNotNull(tempStud)) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(tempStud);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Student> deleteStudent(@PathVariable("id") long id) {
         Student tempStud = schoolService.deleteStudent(id);
+        if (!verifierNotNull(tempStud)) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(tempStud);
     }
 
@@ -48,4 +60,10 @@ public class StudentController {
         return ResponseEntity.ok(tempSet);
     }
 
+    private boolean verifierNotNull(Student student){
+        if(student == null){
+            return false;
+        }
+        return true;
+    }
 }

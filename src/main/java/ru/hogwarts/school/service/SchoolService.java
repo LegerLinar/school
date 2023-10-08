@@ -5,7 +5,6 @@ import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,10 +14,12 @@ public class SchoolService {
     private long idIncrementor = 0;
 
 
-    public Student addStudent(Student student) {
+    public Student createStudent(Student student) {
         student.setId(++idIncrementor);
-        studentMap.put(idIncrementor, student);
-        return student;
+        if(studentMap.put(idIncrementor, student) == null) {
+            return student;
+        }
+        return null;
     }
 
     public Student findStudent(long id) {
@@ -26,7 +27,9 @@ public class SchoolService {
     }
 
     public Student updateStudent(Student student) {
-        studentMap.put(student.getId(),student);
+        if (studentMap.put(student.getId(), student) == null) {
+            return null;
+        }
         return student;
     }
 
