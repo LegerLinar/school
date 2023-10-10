@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
@@ -12,6 +13,11 @@ public class SchoolService {
 
     private HashMap<Long, Student> studentMap = new HashMap<>();
     private long idIncrementor = 0;
+    private final StudentRepository studentRepository;
+
+    public SchoolService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
 
     public Student createStudent(Student student) {
