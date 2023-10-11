@@ -5,12 +5,9 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 @Service
-public class FacultyService {
-    private HashMap<Long, Faculty> facultyMap = new HashMap<>();
+public class FacultyService{
     private long idIncrementor = 0;
     private final FacultyRepository facultyRepository;
 
@@ -20,31 +17,30 @@ public class FacultyService {
 
 
     public Faculty createFaculty(Faculty faculty) {
-        faculty.setId(++idIncrementor);
-        if (facultyMap.put(idIncrementor, faculty) == null) {
+//        faculty.setId(++idIncrementor);
+        ;
+        if (facultyRepository.save(faculty) == null) {
             return faculty;
         }
         return null;
     }
 
     public Faculty findFaculty(long id) {
-        return facultyMap.get(id);
+        return facultyRepository.getById(id);
     }
 
     public Faculty updateFaculty(Faculty faculty) {
-        if (facultyMap.put(faculty.getId(), faculty) == null) {
+        if (facultyRepository.save(faculty) == null) {
             return null;
         }
         return faculty;
     }
 
     public Faculty deleteFaculty(long id) {
-        return facultyMap.remove(id);
+        return facultyRepository.deleteFacultyById(id);
     }
 
     public Collection<Faculty> getFacultySetByColor(String color) {
-        return facultyMap.values().stream()
-                .filter(faculty -> faculty.getColor().equals(color))
-                .collect(Collectors.toSet());
+        return facultyRepository.getFacultiesByColor(color);
     }
 }
