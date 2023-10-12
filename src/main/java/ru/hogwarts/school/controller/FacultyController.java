@@ -20,7 +20,7 @@ public class FacultyController {
     @PostMapping
     public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty) {
         Faculty tempFac = facultyService.createFaculty(faculty);
-        if(!verifierNotNull(tempFac)){
+        if (!verifierNotNull(tempFac)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(tempFac);
@@ -60,10 +60,7 @@ public class FacultyController {
         return ResponseEntity.ok(tempCollection);
     }
 
-    private boolean verifierNotNull(Faculty faculty){
-        if(faculty == null){
-            return false;
-        }
-        return true;
+    private boolean verifierNotNull(Faculty faculty) {
+        return faculty != null;
     }
 }

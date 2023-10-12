@@ -5,6 +5,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class SchoolService {
@@ -18,7 +19,6 @@ public class SchoolService {
 
 
     public Student createStudent(Student student) {
-        student.setId(++idIncrementor);
         if(studentRepository.save(student) == null) {
             return student;
         }
@@ -26,14 +26,14 @@ public class SchoolService {
     }
 
     public Student findStudent(long id) {
-        return studentRepository.getStudentById(id);
+        return studentRepository.getById(id);
     }
 
     public Student updateStudent(Student student) {
-        if (studentRepository.save(student) == null) {
-            return null;
+        if (studentRepository.findById(student.getId()) != null) {
+            return studentRepository.save(student);
         }
-        return student;
+        return null;
     }
 
     public Student deleteStudent(long id) {

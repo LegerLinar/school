@@ -7,10 +7,6 @@ import java.util.Collection;
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
 
-    Faculty save(Faculty faculty);
-
-    Faculty getById(long id);
-
     Faculty deleteFacultyById(long id);
 
     Collection<Faculty> getFacultiesByColor(String color);

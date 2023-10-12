@@ -61,9 +61,6 @@ public class StudentController {
     }
 
     private boolean verifierNotNull(Student student){
-        if(student == null){
-            return false;
-        }
-        return true;
+        return student != null;
     }
 }

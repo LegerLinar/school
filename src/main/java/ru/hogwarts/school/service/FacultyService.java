@@ -17,8 +17,6 @@ public class FacultyService{
 
 
     public Faculty createFaculty(Faculty faculty) {
-//        faculty.setId(++idIncrementor);
-        ;
         if (facultyRepository.save(faculty) == null) {
             return faculty;
         }
@@ -30,10 +28,10 @@ public class FacultyService{
     }
 
     public Faculty updateFaculty(Faculty faculty) {
-        if (facultyRepository.save(faculty) == null) {
-            return null;
+        if (facultyRepository.findById(faculty.getId()) != null) {
+            return facultyRepository.save(faculty);
         }
-        return faculty;
+        return null;
     }
 
     public Faculty deleteFaculty(long id) {
