@@ -7,11 +7,17 @@ public class Student {
     @Id
     @GeneratedValue
     private long id = 0L;
+
     private String name;
     private int age;
 
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
 
-
+    public Faculty getFaculty() {
+        return faculty;
+    }
 
     public void setId(Long id) {
         this.id = id;
