@@ -9,4 +9,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Student deleteStudentById(long id);
     Collection<Student> getStudentsByAge(int age);
+
+    Collection<Student> findAllByAgeBetween(int min, int max);
 }

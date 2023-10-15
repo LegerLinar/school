@@ -24,7 +24,7 @@ public class FacultyService{
     }
 
     public Faculty findFaculty(long id) {
-        return facultyRepository.getById(id);
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public Faculty updateFaculty(Faculty faculty) {
@@ -40,5 +40,10 @@ public class FacultyService{
 
     public Collection<Faculty> getFacultySetByColor(String color) {
         return facultyRepository.getFacultiesByColor(color);
+    }
+
+
+    public Collection<Faculty> filterByNameOrColor(String name, String color) {
+        return facultyRepository.findAllByNameOrColorIgnoreCase(name, color);
     }
 }

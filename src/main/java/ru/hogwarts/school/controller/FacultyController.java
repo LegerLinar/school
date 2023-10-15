@@ -60,6 +60,12 @@ public class FacultyController {
         return ResponseEntity.ok(tempCollection);
     }
 
+    @GetMapping("/filterByNameOrColor")
+    public Collection<Faculty> filterByNameOrColor(@RequestParam(required = false) String name,
+                                                   @RequestParam(required = false) String color) {
+        return facultyService.filterByNameOrColor(name, color);
+    }
+
     private boolean verifierNotNull(Faculty faculty) {
         return faculty != null;
     }

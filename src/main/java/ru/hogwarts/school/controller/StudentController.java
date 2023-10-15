@@ -60,6 +60,11 @@ public class StudentController {
         return ResponseEntity.ok(tempSet);
     }
 
+    @GetMapping("/studentsAgeBetween")
+    public Collection<Student> byAgeBetween(@RequestParam int min, @RequestParam int max) {
+        return schoolService.filterByAgeBetween(min, max);
+    }
+
     private boolean verifierNotNull(Student student){
         return student != null;
     }

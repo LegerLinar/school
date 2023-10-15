@@ -26,7 +26,7 @@ public class SchoolService {
     }
 
     public Student findStudent(long id) {
-        return studentRepository.getById(id);
+        return studentRepository.findById(id).orElse(null);
     }
 
     public Student updateStudent(Student student) {
@@ -43,5 +43,9 @@ public class SchoolService {
 
     public Collection<Student> getStudentSetByAge(int age) {
         return studentRepository.getStudentsByAge(age);
+    }
+
+    public Collection<Student> filterByAgeBetween(int min, int max) {
+        return studentRepository.findAllByAgeBetween(min, max);
     }
 }
