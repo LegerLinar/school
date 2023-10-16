@@ -66,8 +66,8 @@ public class StudentController {
         return schoolService.filterByAgeBetween(min, max);
     }
 
-    @GetMapping("/studentsFaculty")
-    public Faculty studentsFaculty(@RequestParam long studentId) {
+    @GetMapping("/{id}/faculty")
+    public Faculty studentsFaculty(@PathVariable("id") long studentId) {
         return schoolService.findFaculty(studentId);
     }
     private boolean verifierNotNull(Student student) {

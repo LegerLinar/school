@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exceptions.FacultyNotFoundException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.model.Faculty;
@@ -9,7 +10,6 @@ import java.util.Collection;
 
 @Service
 public class FacultyService{
-    private long idIncrementor = 0;
     private final FacultyRepository facultyRepository;
 
     public FacultyService(FacultyRepository facultyRepository) {
@@ -49,7 +49,8 @@ public class FacultyService{
     }
 
     public Collection<Student> findStudentsOfFaculty(long facultyId) {
-        Faculty faculty = facultyRepository.findById(facultyId).orElse(null);
+        Faculty faculty = facultyRepository.findById(facultyId)
+                .orElseThrow(() -> new FacultyNotFoundException("Faculty not found"));
         return faculty.getStudents();
     }
 }
