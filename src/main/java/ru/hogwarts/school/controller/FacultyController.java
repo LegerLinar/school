@@ -67,7 +67,7 @@ public class FacultyController {
         return facultyService.filterByNameOrColor(name, color);
     }
 
-    @GetMapping("/{id}}/students")
+    @GetMapping("/{id}/students")
     public Collection<Student> findStudentsOfFaculty(@PathVariable("id") long facultyId) {
         return facultyService.findStudentsOfFaculty(facultyId);
     }

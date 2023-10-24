@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String filePath;
     private Long fileSize;
     private String mediaType;
@@ -51,7 +51,7 @@ public class Avatar {
         this.filePath = filePath;
     }
 
-    public Long getFileSize() {
+    public long getFileSize() {
         return fileSize;
     }
 
